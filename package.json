@@ -1,0 +1,19 @@
+{
+  "name": "fb-bot",
+  "version": "1.0.0",
+  "description": "Facebook messanger chat bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "messenger",
+    "bot",
+    "facebook"
+  ],
+  "author": "Joshua Azemoh <joshazemoh@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
