@@ -1,0 +1,6 @@
+{
+  "name": "FB Bot",
+  "description": "Facebook messanger chat bot",
+  "keywords": ["messenger", "bot", "facebook"],
+  "image": "heroku/nodejs"
+}
