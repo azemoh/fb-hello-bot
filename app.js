@@ -1,12 +1,19 @@
-// Modules
+// Module dependencies
 var express = require('express');
+var bodyParser = require('body-parser');
 
 // Express Server
 var app = express();
 
+
 // App Variables
 app.set('port', (process.env.PORT || 5000));
 app.set('fb_verify_token', process.env.FB_VERIFY_TOKEN)
+
+
+// Middlewares
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // Test URL
@@ -27,12 +34,13 @@ app.get('/webhook/', function (req, res) {
 
 // Listen to post requests
 app.post('/webhook/', function (req, res) {
-  messaging_events = req.body.entry[0].messaging;
+  var messaging_events = req.body.entry[0].messaging;
+  
   for (var i = 0; i < messaging_events.length; i++) {
-    event = req.body.entry[0].messaging[i];
-    sender = event.sender.id;
+    var event = messaging_events.messaging[i];
+    var sender = event.sender.id;
     if (event.message && event.message.text) {
-      text = event.message.text;
+      var text = event.message.text;
 
       console.log(text);
     }
