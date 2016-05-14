@@ -8,7 +8,7 @@ app.get('/hello/', function (req, res) {
   res.send("Hi user :)");
 });
 
-app.post('/webhook/', function (req, res) {
+app.get('/webhook/', function (req, res) {
   if (req.query['hub.verify_token'] === app.get('fb_verify_token')) {
     res.send(req.query['hub.challenge']);
   }
