@@ -2,13 +2,18 @@ var express = require('express');
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
+app.set('fb_verify_token', process.env.FB_VERIFY_TOKEN)
 
-app.get('/hello/', function () {
+app.get('/hello/', function (req, res) {
   res.send("Hi user :)");
 });
 
 app.post('/webhook/', function (req, res) {
-  res.send("Hello world");
+  if (req.query['hub.verify_token'] === app.get('fb_verify_token')) {
+    res.send(req.query['hub.challenge']);
+  }
+
+  res.send('Error, wrong validation token');
 });
 
 
