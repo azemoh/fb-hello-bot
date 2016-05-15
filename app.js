@@ -9,7 +9,7 @@ var app = express();
 // App Variables
 app.set('port', (process.env.PORT || 5000));
 app.set('fb_verify_token', process.env.FB_VERIFY_TOKEN);
-
+app.set('fb_page_access_token', process.env.FB_PAGE_ACCESS_TOKEN);
 
 // Middlewares
 app.use(bodyParser.json());
@@ -43,11 +43,35 @@ app.post('/webhook/', function (req, res) {
       var text = event.message.text;
 
       console.log(text);
+      sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
     }
   }
   res.sendStatus(200);
 });
 
+
+var token = app.get('fb_page_access_token');
+
+function sendTextMessage(sender, text) {
+  messageData = {
+    text:text
+  }
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {access_token:token},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending message: ', error);
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error);
+    }
+  });
+}
 
 // Start Server
 app.listen(app.get('port'), function() {
