@@ -8,11 +8,11 @@ var app = express();
 
 // App Variables
 app.set('port', (process.env.PORT || 5000));
-app.set('fb_verify_token', process.env.FB_VERIFY_TOKEN)
+app.set('fb_verify_token', process.env.FB_VERIFY_TOKEN);
 
 
 // Middlewares
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
@@ -35,9 +35,9 @@ app.get('/webhook/', function (req, res) {
 // Listen to post requests
 app.post('/webhook/', function (req, res) {
   var messaging_events = req.body.entry[0].messaging;
-  
+
   for (var i = 0; i < messaging_events.length; i++) {
-    var event = messaging_events.messaging[i];
+    var event = messaging_events[i];
     var sender = event.sender.id;
     if (event.message && event.message.text) {
       var text = event.message.text;
